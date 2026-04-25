@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — NexusIntelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a08;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --green-light: #3d9966;
+    --grey: rgba(245,240,232,0.55);
+    --border: rgba(201,168,76,0.15);
+    --surface: #111109;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--black); color:var(--cream); font-family:'Instrument Sans',sans-serif; }
+
+  nav {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.5rem 3rem; border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:100;
+    backdrop-filter:blur(20px); background:rgba(10,10,8,0.85);
+  }
+  .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.15em; color:var(--gold); }
+  .nav-logo span { color:var(--cream); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--grey); text-decoration:none; transition:color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+  .nav-cta { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; background:var(--gold); color:var(--black); border:none; padding:0.7rem 1.4rem; cursor:pointer; text-decoration:none; transition:background 0.2s; }
+  .nav-cta:hover { background:var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    padding:8rem 3rem 5rem;
+    max-width:1100px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center;
+  }
+  .hero-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+  .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(4rem,7vw,7rem); line-height:0.9; letter-spacing:0.02em; margin-bottom:1.5rem; }
+  .hero-title em { font-family:'DM Serif Display',serif; font-style:italic; color:var(--gold); }
+  .hero-body { font-size:1rem; line-height:1.8; color:var(--grey); margin-bottom:2rem; }
+  .hero-stat-row { display:flex; gap:2.5rem; margin-top:2rem; }
+  .hero-stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:var(--gold); line-height:1; }
+  .hero-stat-label { font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--grey); margin-top:0.2rem; }
+
+  .hero-right { position:relative; }
+  .manifesto-card {
+    border:1px solid var(--border);
+    background:var(--surface);
+    padding:3rem;
+    position:relative;
+  }
+  .manifesto-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--gold);
+  }
+  .manifesto-label { font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; }
+  .manifesto-text { font-family:'DM Serif Display',serif; font-size:1.25rem; line-height:1.7; font-style:italic; color:var(--cream); }
+  .manifesto-attr { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--grey); margin-top:1.5rem; }
+
+  /* MISSION */
+  .section { padding:5rem 3rem; max-width:1100px; margin:0 auto; }
+  .section-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,5vw,5rem); line-height:0.95; letter-spacing:0.02em; margin-bottom:2.5rem; }
+  .section-title em { font-family:'DM Serif Display',serif; font-style:italic; }
+
+  .mission-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); margin-top:3rem; }
+  .mission-card { background:var(--black); padding:2.5rem 2rem; transition:background 0.3s; }
+  .mission-card:hover { background:var(--surface); }
+  .mission-icon { font-size:2rem; margin-bottom:1.2rem; display:block; }
+  .mission-title { font-family:'DM Serif Display',serif; font-size:1.3rem; margin-bottom:0.8rem; }
+  .mission-body { font-size:0.85rem; line-height:1.7; color:var(--grey); }
+
+  /* TEAM */
+  .team-section { padding:5rem 3rem; background:var(--surface); }
+  .team-inner { max-width:1100px; margin:0 auto; }
+  .team-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5px; background:var(--border); margin-top:3rem; }
+  .team-card { background:var(--surface); padding:2.5rem 2rem; position:relative; overflow:hidden; transition:background 0.3s; }
+  .team-card:hover { background:#161614; }
+  .team-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform 0.4s; }
+  .team-card:hover::after { transform:scaleX(1); }
+  .team-avatar { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, var(--gold), #8b6914); display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--black); margin-bottom:1.2rem; }
+  .team-name { font-family:'DM Serif Display',serif; font-size:1.1rem; margin-bottom:0.3rem; }
+  .team-role { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem; }
+  .team-bio { font-size:0.8rem; line-height:1.6; color:var(--grey); }
+
+  /* VALUES */
+  .values-section { padding:5rem 3rem; max-width:1100px; margin:0 auto; }
+  .values-list { margin-top:3rem; }
+  .value-row { display:grid; grid-template-columns:80px 1fr 1fr; gap:2rem; align-items:start; padding:2rem 0; border-bottom:1px solid var(--border); }
+  .value-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:rgba(201,168,76,0.2); line-height:1; }
+  .value-name { font-family:'DM Serif Display',serif; font-size:1.3rem; margin-bottom:0.5rem; }
+  .value-tagline { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); }
+  .value-desc { font-size:0.88rem; line-height:1.7; color:var(--grey); }
+
+  /* CTA */
+  .cta { padding:6rem 3rem; text-align:center; background:var(--surface); border-top:1px solid var(--border); }
+  .cta-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,6vw,6rem); line-height:0.9; margin-bottom:1.2rem; }
+  .cta-sub { font-size:1rem; color:var(--grey); max-width:480px; margin:0 auto 2.5rem; line-height:1.7; }
+  .btn-gold { background:var(--gold); color:var(--black); padding:1rem 2.5rem; font-family:'IBM Plex Mono',monospace; font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; display:inline-block; transition:all 0.2s; }
+  .btn-gold:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+  footer { border-top:1px solid var(--border); padding:2.5rem 3rem; display:flex; align-items:center; justify-content:space-between; }
+  .footer-logo { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.12em; color:var(--gold); }
+  .footer-copy { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(245,240,232,0.25); }
+
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity:1; transform:none; }
+
+  @media(max-width:900px){
+    .hero, .mission-grid, .team-grid { grid-template-columns:1fr; }
+    .value-row { grid-template-columns:50px 1fr; }
+    .value-desc { grid-column:2; }
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    .section, .team-section, .values-section, .cta { padding:3.5rem 1.5rem; }
+    .hero { padding:6rem 1.5rem 3.5rem; }
+  }
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%230a0a08' rx='6'/%3E%3Cpolygon points='30,4 53,17 53,43 30,56 7,43 7,17' fill='none' stroke='%23c9a84c' stroke-width='2'/%3E%3Ctext x='30' y='38' font-family='Arial Black' font-size='22' font-weight='900' fill='%23c9a84c' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" height="40">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c96a"/>
+      <stop offset="100%" style="stop-color:#c9a84c"/>
+    </linearGradient>
+  </defs>
+  <polygon points="30,3 54,17 54,45 30,59 6,45 6,17" fill="none" stroke="url(#g)" stroke-width="2"/>
+  <polygon points="30,11 46,20 46,40 30,49 14,40 14,20" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+  <text x="30" y="37" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="url(#g)" text-anchor="middle">N</text>
+  <circle cx="30" cy="3" r="2.5" fill="#c9a84c"/>
+  <circle cx="54" cy="17" r="2.5" fill="#c9a84c"/>
+  <circle cx="54" cy="45" r="2.5" fill="#c9a84c"/>
+  <circle cx="30" cy="59" r="2.5" fill="#c9a84c"/>
+  <circle cx="6" cy="45" r="2.5" fill="#c9a84c"/>
+  <circle cx="6" cy="17" r="2.5" fill="#c9a84c"/>
+  <text x="70" y="28" font-family="Arial Black,Impact,sans-serif" font-size="22" font-weight="900" fill="#f5f0e8" letter-spacing="3">NEXUS</text>
+  <text x="70" y="52" font-family="Arial Black,Impact,sans-serif" font-size="22" font-weight="900" fill="url(#g)" letter-spacing="3">INTEL</text>
+</svg>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#products">Reports</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <a href="checkout.html" class="nav-cta">Get Access</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-left reveal">
+    <p class="hero-eyebrow">Our Story</p>
+    <h1 class="hero-title">Built For<br>People Who<br><em>Act</em> On<br>Intel</h1>
+    <p class="hero-body">NexusIntelligence was founded by analysts who were tired of AI coverage that was either too shallow for experts or too technical for decision-makers. We built the platform we wished existed.</p>
+    <div class="hero-stat-row">
+      <div>
+        <div class="hero-stat-num">2024</div>
+        <div class="hero-stat-label">Founded</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">12K+</div>
+        <div class="hero-stat-label">Subscribers</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">340+</div>
+        <div class="hero-stat-label">Reports</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right reveal">
+    <div class="manifesto-card">
+      <p class="manifesto-label">Our Manifesto</p>
+      <p class="manifesto-text">"AI is not a trend to observe. It is infrastructure being built beneath every industry on earth. The question is not whether it will change your world — it is whether you will see it coming."</p>
+      <p class="manifesto-attr">— NexusIntelligence Founding Principles, 2024</p>
+    </div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div class="section">
+  <p class="section-eyebrow reveal">What We Do</p>
+  <h2 class="section-title reveal">Our <em>Mission</em></h2>
+  <div class="mission-grid">
+    <div class="mission-card reveal">
+      <span class="mission-icon">🎯</span>
+      <h3 class="mission-title">Signal Over Noise</h3>
+      <p class="mission-body">The AI news cycle produces hundreds of headlines a day. We distill it to the 5–10 developments that actually matter — and explain why.</p>
+    </div>
+    <div class="mission-card reveal">
+      <span class="mission-icon">📐</span>
+      <h3 class="mission-title">Institutional Rigor</h3>
+      <p class="mission-body">Every report is built to the standard of institutional research: primary sources, original data, peer-reviewed where applicable, no hype.</p>
+    </div>
+    <div class="mission-card reveal">
+      <span class="mission-icon">⚡</span>
+      <h3 class="mission-title">Actionable Intelligence</h3>
+      <p class="mission-body">We don't just report what happened. We tell you what it means for your business, your investments, and your strategy — specifically.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="team-section">
+  <div class="team-inner">
+    <p class="section-eyebrow reveal">The People Behind It</p>
+    <h2 class="section-title reveal">Our <em>Team</em></h2>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">MR</div>
+        <p class="team-name">Marcus Reid</p>
+        <p class="team-role">Founder & Editor-in-Chief</p>
+        <p class="team-bio">Former ML researcher at a top-3 AI lab. 12 years covering emerging tech for institutional clients. Built NexusIntelligence after seeing how poorly AI was covered for business audiences.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#3d9966,#1a4d33)">SK</div>
+        <p class="team-name">Sophia Kim</p>
+        <p class="team-role">Head of Research</p>
+        <p class="team-bio">PhD in Computer Science, Stanford. Previously led AI strategy at a Fortune 100 company. Specializes in enterprise AI adoption and workforce transformation.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#4c6bc9,#1a2a5e)">JO</div>
+        <p class="team-name">James Okafor</p>
+        <p class="team-role">Markets & Investment Analyst</p>
+        <p class="team-bio">Ex-Goldman Sachs technology analyst. Covers AI funding rounds, M&A, and the investment landscape. Tracks over 400 AI companies in real time.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#c94c2a,#7a1a0a)">PV</div>
+        <p class="team-name">Priya Varma</p>
+        <p class="team-role">Policy & Regulation Lead</p>
+        <p class="team-bio">Former technology policy advisor to the EU Parliament. Tracks AI legislation across 40 countries. Translates regulatory risk into plain business language.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="values-section">
+  <p class="section-eyebrow reveal">What We Stand For</p>
+  <h2 class="section-title reveal">Our <em>Values</em></h2>
+  <div class="values-list">
+    <div class="value-row reveal">
+      <div class="value-num">01</div>
+      <div>
+        <div class="value-name">Accuracy First</div>
+        <div class="value-tagline">We correct. We cite. We verify.</div>
+      </div>
+      <div class="value-desc">We have a standing correction policy. If we get something wrong, we fix it publicly and immediately. Our credibility is the product.</div>
+    </div>
+    <div class="value-row reveal">
+      <div class="value-num">02</div>
+      <div>
+        <div class="value-name">No Conflicts</div>
+        <div class="value-tagline">We don't take vendor money.</div>
+      </div>
+      <div class="value-desc">We accept zero sponsored content, affiliate relationships, or vendor partnerships. Our analysis is never for sale. Revenue comes only from subscribers.</div>
+    </div>
+    <div class="value-row reveal">
+      <div class="value-num">03</div>
+      <div>
+        <div class="value-name">Subscriber Obsession</div>
+        <div class="value-tagline">You pay us. We work for you.</div>
+      </div>
+      <div class="value-desc">Every editorial decision starts with one question: does this make our subscribers smarter? If not, we don't publish it.</div>
+    </div>
+    <div class="value-row reveal">
+      <div class="value-num">04</div>
+      <div>
+        <div class="value-name">Radical Transparency</div>
+        <div class="value-tagline">Open about what we know and don't.</div>
+      </div>
+      <div class="value-desc">We clearly separate verified facts from analysis from speculation. We never disguise uncertainty as confidence to sound more authoritative.</div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">
+  <h2 class="cta-title reveal">JOIN THE<br><span style="color:var(--gold);font-family:'DM Serif Display',serif;font-style:italic">12,000</span></h2>
+  <p class="cta-sub reveal">Decision-makers, investors, and executives who start their week with NexusIntelligence.</p>
+  <a href="checkout.html" class="btn-gold reveal">Start Your Free Trial</a>
+</div>
+
+<footer>
+  <div class="footer-logo">NEXUSINTELLIGENCE</div>
+  <p class="footer-copy">© 2026 NexusIntelligenceligence LLC. All rights reserved.</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('visible')), { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

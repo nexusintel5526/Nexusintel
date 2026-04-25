@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Report — NexusIntelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#0a0a08; --cream:#f5f0e8; --gold:#c9a84c; --gold-light:#e8c96a;
+    --grey:rgba(245,240,232,0.55); --border:rgba(201,168,76,0.15); --surface:#111109;
+    --paper:#faf7f2; --ink:#1a1a14; --rule:#d4c9b0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--black); color:var(--cream); font-family:'Instrument Sans',sans-serif; }
+
+  nav {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.5rem 3rem; border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:100;
+    backdrop-filter:blur(20px); background:rgba(10,10,8,0.9);
+  }
+  .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.15em; color:var(--gold); }
+  .nav-logo span { color:var(--cream); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--grey); text-decoration:none; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--gold); }
+  .nav-cta { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; background:var(--gold); color:var(--black); padding:0.7rem 1.4rem; text-decoration:none; transition:background 0.2s; }
+  .nav-cta:hover { background:var(--gold-light); }
+
+  /* REPORT META BAR */
+  .report-bar { background:var(--surface); border-bottom:1px solid var(--border); padding:1rem 3rem; }
+  .report-bar-inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .report-bar-left { display:flex; gap:2rem; align-items:center; }
+  .report-pill { font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.3rem 0.8rem; }
+  .report-pill.sample { background:rgba(61,153,102,0.15); color:#3d9966; border:1px solid rgba(61,153,102,0.3); }
+  .report-pill.type { background:rgba(201,168,76,0.1); color:var(--gold); border:1px solid var(--border); }
+  .report-date { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:var(--grey); }
+  .unlock-btn { background:var(--gold); color:var(--black); padding:0.6rem 1.4rem; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; transition:background 0.2s; white-space:nowrap; }
+  .unlock-btn:hover { background:var(--gold-light); }
+
+  /* REPORT DOCUMENT */
+  .report-wrap { max-width:900px; margin:0 auto; padding:3rem; }
+
+  .report-cover { background:var(--surface); border:1px solid var(--border); padding:4rem; margin-bottom:3rem; position:relative; overflow:hidden; }
+  .report-cover::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--gold); }
+  .cover-meta { font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:2rem; display:flex; gap:2rem; flex-wrap:wrap; }
+  .cover-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,6vw,5.5rem); line-height:0.9; letter-spacing:0.02em; margin-bottom:1rem; color:var(--cream); }
+  .cover-title em { font-family:'DM Serif Display',serif; font-style:italic; color:var(--gold); }
+  .cover-subtitle { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.3rem; color:var(--grey); margin-bottom:2.5rem; line-height:1.4; }
+  .cover-stats { display:flex; gap:0; border-top:1px solid var(--border); padding-top:2rem; }
+  .cover-stat { flex:1; text-align:center; padding:0 1rem; border-right:1px solid var(--border); }
+  .cover-stat:last-child { border-right:none; }
+  .cover-stat-num { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--gold); }
+  .cover-stat-label { font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--grey); margin-top:0.2rem; }
+
+  /* CONTENT */
+  .report-content { font-family:'Lora',serif; color:var(--cream); }
+  .section-label { font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-bottom:1.5rem; margin-top:3rem; }
+  .report-h2 { font-family:'DM Serif Display',serif; font-size:1.8rem; line-height:1.2; margin-bottom:1rem; color:var(--cream); }
+  .report-p { font-size:1rem; line-height:1.85; color:rgba(245,240,232,0.82); margin-bottom:1.2rem; }
+  .report-p strong { color:var(--cream); font-weight:600; }
+  .pull-quote { border-left:3px solid var(--gold); padding:1.2rem 2rem; margin:2.5rem 0; background:rgba(201,168,76,0.04); }
+  .pull-quote p { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.2rem; line-height:1.6; color:var(--cream); }
+
+  /* DATA VIZ */
+  .chart-block { background:var(--surface); border:1px solid var(--border); padding:2rem; margin:2.5rem 0; }
+  .chart-title { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; }
+  .bar-chart { display:flex; flex-direction:column; gap:0.8rem; }
+  .bar-row { display:flex; align-items:center; gap:1rem; }
+  .bar-label { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--grey); width:130px; flex-shrink:0; text-align:right; }
+  .bar-track { flex:1; background:rgba(245,240,232,0.06); height:24px; position:relative; overflow:hidden; }
+  .bar-fill { height:100%; background:var(--gold); transition:width 1.5s cubic-bezier(0.16,1,0.3,1); display:flex; align-items:center; justify-content:flex-end; padding-right:0.5rem; }
+  .bar-fill.alt { background:rgba(201,168,76,0.4); }
+  .bar-val { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; color:var(--black); }
+  .bar-fill.alt .bar-val { color:var(--cream); }
+
+  /* KEY FINDINGS */
+  .findings-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); margin:2rem 0; }
+  .finding-card { background:var(--surface); padding:1.8rem; }
+  .finding-num { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:rgba(201,168,76,0.25); line-height:1; margin-bottom:0.5rem; }
+  .finding-text { font-size:0.88rem; line-height:1.6; color:rgba(245,240,232,0.75); }
+  .finding-text strong { color:var(--gold); }
+
+  /* GATE */
+  .gate { position:relative; margin-top:2rem; }
+  .gate-blur { filter:blur(4px); opacity:0.4; pointer-events:none; user-select:none; }
+  .gate-overlay { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:linear-gradient(to bottom, transparent, rgba(10,10,8,0.95) 40%); padding:3rem; }
+  .gate-icon { font-size:2.5rem; margin-bottom:1rem; }
+  .gate-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:0.03em; margin-bottom:0.5rem; }
+  .gate-sub { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--grey); margin-bottom:2rem; max-width:400px; line-height:1.6; }
+  .gate-btn { background:var(--gold); color:var(--black); padding:1rem 2.5rem; font-family:'IBM Plex Mono',monospace; font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; display:inline-block; transition:all 0.2s; margin-bottom:0.8rem; }
+  .gate-btn:hover { background:var(--gold-light); transform:translateY(-2px); }
+  .gate-note { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(245,240,232,0.3); }
+
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity:1; transform:none; }
+
+  @media(max-width:768px){
+    .report-wrap { padding:1.5rem; }
+    .report-cover { padding:2rem; }
+    .cover-stats { flex-wrap:wrap; }
+    .findings-grid { grid-template-columns:1fr; }
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    .report-bar { padding:1rem 1.5rem; }
+  }
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%230a0a08' rx='6'/%3E%3Cpolygon points='30,4 53,17 53,43 30,56 7,43 7,17' fill='none' stroke='%23c9a84c' stroke-width='2'/%3E%3Ctext x='30' y='38' font-family='Arial Black' font-size='22' font-weight='900' fill='%23c9a84c' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" height="40">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c96a"/>
+      <stop offset="100%" style="stop-color:#c9a84c"/>
+    </linearGradient>
+  </defs>
+  <polygon points="30,3 54,17 54,45 30,59 6,45 6,17" fill="none" stroke="url(#g)" stroke-width="2"/>
+  <polygon points="30,11 46,20 46,40 30,49 14,40 14,20" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+  <text x="30" y="37" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="url(#g)" text-anchor="middle">N</text>
+  <circle cx="30" cy="3" r="2.5" fill="#c9a84c"/>
+  <circle cx="54" cy="17" r="2.5" fill="#c9a84c"/>
+  <circle cx="54" cy="45" r="2.5" fill="#c9a84c"/>
+  <circle cx="30" cy="59" r="2.5" fill="#c9a84c"/>
+  <circle cx="6" cy="45" r="2.5" fill="#c9a84c"/>
+  <circle cx="6" cy="17" r="2.5" fill="#c9a84c"/>
+  <text x="70" y="28" font-family="Arial Black,Impact,sans-serif" font-size="22" font-weight="900" fill="#f5f0e8" letter-spacing="3">NEXUS</text>
+  <text x="70" y="52" font-family="Arial Black,Impact,sans-serif" font-size="22" font-weight="900" fill="url(#g)" letter-spacing="3">INTEL</text>
+</svg>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="blog.html">Briefings</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="report.html">Sample Report</a></li>
+  </ul>
+  <a href="checkout.html" class="nav-cta">Unlock Full Report</a>
+</nav>
+
+<div class="report-bar">
+  <div class="report-bar-inner">
+    <div class="report-bar-left">
+      <span class="report-pill sample">Free Sample</span>
+      <span class="report-pill type">Deep Research</span>
+      <span class="report-date">April 2026 · 72 pages · 200+ data points</span>
+    </div>
+    <a href="checkout.html" class="unlock-btn">Unlock Full Report — $199</a>
+  </div>
+</div>
+
+<div class="report-wrap">
+
+  <!-- COVER -->
+  <div class="report-cover reveal">
+    <div class="cover-meta">
+      <span>NexusIntelligence Research</span>
+      <span>Issue: April 2026</span>
+      <span>Classification: Professional</span>
+    </div>
+    <h1 class="cover-title">The <em>Agentic</em><br>Revolution</h1>
+    <p class="cover-subtitle">How autonomous AI agents are reshaping enterprise workflows, what it means for the labor market, and where the $2 trillion opportunity lies for early movers</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="cover-stat-num">72</div><div class="cover-stat-label">Pages</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">14</div><div class="cover-stat-label">Sectors</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">200+</div><div class="cover-stat-label">Data Points</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">$2T</div><div class="cover-stat-label">Market Est.</div></div>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY (free) -->
+  <div class="report-content">
+    <div class="section-label reveal">Executive Summary</div>
+    <h2 class="report-h2 reveal">The Shift From Tools to Agents Is Happening Faster Than Anyone Predicted</h2>
+    <p class="report-p reveal">In Q1 2026, the number of enterprise deployments featuring autonomous AI agents — systems that plan, execute multi-step tasks, and interact with external tools without continuous human oversight — grew by <strong>340% year-over-year</strong>. This is not a gradual adoption curve. It is a step change.</p>
+    <p class="report-p reveal">The implications extend far beyond productivity gains. Agentic AI is triggering a fundamental reorganization of how work is structured, what skills are valued, and which companies will control critical infrastructure over the next decade. Early movers are already establishing moats that will be difficult to close.</p>
+
+    <div class="pull-quote reveal">
+      <p>"The question for enterprise leaders is no longer whether to deploy AI agents. It is whether they will build the institutional knowledge to direct them — or cede that capability to vendors."</p>
+    </div>
+
+    <div class="section-label reveal">Key Findings</div>
+    <div class="findings-grid reveal">
+      <div class="finding-card">
+        <div class="finding-num">01</div>
+        <p class="finding-text"><strong>$847B</strong> in enterprise software spend is directly at risk of displacement by agentic AI systems within 36 months — concentrated in data processing, compliance, and customer operations.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">02</div>
+        <p class="finding-text">Companies that deployed agents in <strong>2024–2025</strong> are reporting average productivity gains of 31% in targeted workflows — but 68% report that rollout costs exceeded initial projections.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">03</div>
+        <p class="finding-text">The <strong>orchestration layer</strong> — the software that coordinates multiple agents — is emerging as the highest-value battleground. Six companies currently control 78% of enterprise orchestration deployments.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">04</div>
+        <p class="finding-text">Healthcare and financial services are <strong>leading adoption</strong> by sector, but regulatory constraints are creating divergent timelines that will reshape competitive dynamics within each vertical.</p>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="chart-block reveal">
+      <p class="chart-title">Agentic AI Adoption by Enterprise Sector — Q1 2026</p>
+      <div class="bar-chart" id="barChart">
+        <div class="bar-row"><span class="bar-label">Financial Services</span><div class="bar-track"><div class="bar-fill" data-width="82"><span class="bar-val">82%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">Healthcare</span><div class="bar-track"><div class="bar-fill" data-width="74"><span class="bar-val">74%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">Legal & Compliance</span><div class="bar-track"><div class="bar-fill" data-width="67"><span class="bar-val">67%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">Manufacturing</span><div class="bar-track"><div class="bar-fill alt" data-width="51"><span class="bar-val">51%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">Retail & E-comm</span><div class="bar-track"><div class="bar-fill alt" data-width="44"><span class="bar-val">44%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">Government</span><div class="bar-track"><div class="bar-fill alt" data-width="28"><span class="bar-val">28%</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="section-label reveal">Section 1 — Market Landscape (Preview)</div>
+    <h2 class="report-h2 reveal">The Three-Layer Stack That Will Define the Agentic Era</h2>
+    <p class="report-p reveal">To understand where value will accrue in the agentic AI market, it helps to think in layers. The <strong>foundation layer</strong> — frontier models from Anthropic, OpenAI, Google DeepMind, and a handful of others — is becoming increasingly commoditized as capabilities converge. Differentiation at this layer is narrowing.</p>
+    <p class="report-p reveal">The <strong>orchestration layer</strong> — frameworks and platforms that coordinate multiple agents, manage memory, and handle tool access — is where the most consequential competition is currently playing out. This is the layer that determines which agents work together, how they share context, and who controls the guardrails.</p>
+
+    <!-- GATED CONTENT -->
+    <div class="gate reveal">
+      <div class="gate-blur">
+        <p class="report-p">The application layer sits atop the stack and is where most enterprise spending currently flows. However, our analysis of 847 enterprise deployments reveals a pattern that fundamentally challenges the prevailing assumption that application-layer solutions will capture the majority of long-term value. In fact, the data points strongly in the opposite direction — and the companies that understand this distinction are already repositioning their vendor strategies accordingly.</p>
+        <p class="report-p">Section 2 of this report examines the 14 enterprise sectors in detail, mapping current adoption curves, regulatory constraints, and the specific workflow categories where agentic AI is generating measurable ROI versus where deployments are failing. Section 3 presents our proprietary framework for evaluating orchestration vendors — the make-or-buy decision that will define enterprise AI strategy for the next five years.</p>
+        <p class="report-p">Our analysis of the labor market impact draws on proprietary survey data from 2,400 knowledge workers across six countries, supplemented by job posting analysis across 18 months. The findings challenge both the alarmist and dismissive narratives that currently dominate public discourse.</p>
+      </div>
+      <div class="gate-overlay">
+        <div class="gate-icon">🔒</div>
+        <h3 class="gate-title">Continue Reading</h3>
+        <p class="gate-sub">This is a preview. The full 72-page report includes Sections 2–7, all data tables, the vendor comparison matrix, and our sector-by-sector investment framework.</p>
+        <a href="checkout.html" class="gate-btn">Unlock Full Report — $199</a>
+        <p class="gate-note">Or get unlimited reports with Professional ($99/mo) or Enterprise ($499/mo)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animate bars when visible
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Animate bar fills
+        e.target.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.querySelectorAll('.bar-fill').forEach(b => b.style.width = '0%');
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
